@@ -1,0 +1,45 @@
+<main class="container mx-auto my-[20px] px-[8%]">
+  <div class="w-full flex flex-col items-center justify-center mb-10">
+    <p class="text-yellow-500 text-[20px] font-light my-1">
+      &#10026;<%=class_key%> - STYLE &#10026;
+    </p>
+    <p class="text-white text-[16px] opacity-90">
+      登錄賬號可下載4K高畫質原圖,為避免流量濫用,每次下載"<span
+        class="text-yellow-400"
+        ><a href="/premium/product">需支付5個銀幣</a></span
+      >",<span class="text-orange-500">白銀會員:年,及以上免費!</span>
+    </p>
+    <p class="text-yellow-400 text-[14px] opacity-70">
+      重大福利,現在起-新用戶注冊并激活賬號可獲得50銀幣獎勵!
+    </p>
+  </div>
+  <div
+    class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
+  >
+    <% if(data){%> <% for(var item of data) { %>
+    <div class="w-full my-3 rounded-md shadow-2xl">
+      <img
+        data-id="<%=item.id%>"
+        data-key="<%=item.class_key%>"
+        src="/images/aiart_pre/<%=item.pre_img%>"
+        alt=""
+      />
+      <p class="bg-slate-700 text-center text-[14px] text-yellow-400 py-2">
+        <a
+          class="hover:text-orange-500"
+          href="/aiart/org_img_down?class_key=<%=item.class_key%>&id=<%=item.id%>"
+          >[ 支付銀幣下載 ]
+        </a>
+      </p>
+    </div>
+    <% } %> <%}%>
+  </div>
+  <div class="w-full my-8 flex items-center justify-center">
+    <p
+      class="text-orange-400 text-center bg-slate-700 py-2 px-2 w-1/2 rounded-md"
+    >
+      加入會員,聯盟網站資源/素材統統享有!
+    </p>
+  </div>
+</main>
+<%- include('./partials/footer.ejs') %>

@@ -1,0 +1,68 @@
+<%- include('./partials/nav.ejs') %>
+<main class="container mx-auto my-[20px] px-[8%]">
+  <div class="w-full flex flex-col items-center justify-center mt-6 mb-6">
+    <img
+      class="rounded-[25%]"
+      src="/images/game_logo_02_512.png"
+      width="120px"
+      alt=""
+    />
+    <p class="text-yellow-500 text-[20px] font-light my-1">
+      &#10026; 像素猴子AI - 博客列表 &#10026;
+    </p>
+    <p class="text-[15px] text-gray-400">
+      本博客致力於關注AI繪畫技術,分享原創AI繪畫作品,如果您轉載本博客内容請注明出處,尊重他人勞動,謝謝!
+    </p>
+  </div>
+  <div class="w-full mt-[30px] mb-11">
+    <h1 class="text-white bg-slate-600 font-bold py-2 px-3 mt-2">
+      &#10148;&nbsp;博客文章列表
+    </h1>
+    <%if(data){%> <% for(var item of data) { %>
+    <p class="text-gray-300 my-3 hover:text-yellow-400 px-3">
+      <span class="text-orange-400">0<%=item.id%></span>
+      <span class="text-green-500 text-[14px]"
+        >&nbsp;&nbsp;<%=item.level==0?"FREE":"VIP" %></span
+      >
+      &nbsp;&nbsp;<a href="/blog/list/<%=item.id%>" target="_blank"
+        ><%=item.title %></a
+      >&nbsp;&#10148;
+    </p>
+    <% } %> <% } %>
+  </div>
+  <div class="w-full my-8 flex items-center justify-center">
+    <p
+      class="text-orange-400 text-center bg-slate-700 py-2 px-2 w-1/2 rounded-md"
+    >
+      加入會員,聯盟網站資源/素材統統享有!
+    </p>
+  </div>
+  <!-- 分頁 -->
+  <% if(!loading) {%>
+  <div class="mx-auto text-center my-4">
+    <% if(page > 1) { %>
+    <a
+      class="bg-purple-500 py-2 px-4 text-white rounded-md mx-4"
+      href="/blog/list/?page=<%=page-1%>"
+      >&#9668;&#9668;</a
+    >
+    <% } %>
+    <!--  -->
+    <a class="text-white mx-3"><%=page%> / <%=pages%></a>
+    <!--  -->
+    <% if(page < pages) { %>
+    <a
+      class="bg-purple-500 py-2 px-4 text-white rounded-md mx-4"
+      href="/blog/list/?page=<%=page+1%>"
+      >&#9658;&#9658;</a
+    >
+    <% } %>
+  </div>
+  <% } %>
+</main>
+<script>
+  $(document).ready(() => {
+    console.log("博客页面准备好了!");
+  });
+</script>
+<%- include('./partials/footer.ejs') %>

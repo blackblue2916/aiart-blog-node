@@ -1,0 +1,158 @@
+<form class="cardKeyForm">
+  <div class="mt-5">
+    <label for="cardTable">選擇充值卡類別</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      name="cardTable"
+      id="cardTable"
+      type="text"
+      value="<%=cardTableName%>"
+      required
+    />
+    <p class="text-red-600 w-full text-[14px] text-center">請選擇卡類型</p>
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='coin_2000'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">2000 銀幣卡</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=coin_2000"
+        >2000 銀幣卡</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='coin_5000'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">5000 銀幣卡</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=coin_5000"
+        >5000 銀幣卡</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='silver_7'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">7天 銀牌會員</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=silver_7"
+        >7天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='silver_180'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >180天 銀牌會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=silver_180"
+        >180天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='silver_360'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >360天 銀牌會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=silver_360"
+        >360天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='gold_180'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >180天 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=gold_180"
+        >180天 黃金會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='gold_360'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >360天 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=gold_360"
+        >360天 黃金會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(cardTableName=='gold_forever'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >永久 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=add-card-key&cardTable=gold_forever"
+        >永久 黃金會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="mt-5">
+      <button
+        class="w-full border rounded-[4px] bg-blue-500 py-2 text-white"
+        type="submit"
+      >
+        提交數據
+      </button>
+    </div>
+  </div>
+</form>
+<script>
+  $(document).ready(() => {
+    const aiartForm = document.querySelector(".cardKeyForm");
+    aiartForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const cardTable = document.getElementById("cardTable");
+      const formData = {
+        cardTable: cardTable.value,
+      };
+      // console.log(formData);
+      fetch("/admin/add-card-key", {
+        headers: {
+          "Content-Type": "application/json",
+          //   "Content-Type": "application/x-www-form-urlencoded",  // XML 使用
+        },
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            alert(`卡密添加成功: ${data.message}`);
+            window.location.reload();
+          }
+        })
+        .catch((err) => alert(err));
+    });
+  });
+</script>

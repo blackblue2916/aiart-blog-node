@@ -1,0 +1,67 @@
+<main class="container mx-auto my-3">
+  <div class="flex flex-col lg:flex-row mx-auto overflow-hidden">
+    <div
+      class="w-full lg:w-2/3 md:w-2/3 flex flex-col items-center justify-center py-3"
+    ></div>
+    <div
+      class="w-full lg:w-1/3 md:w-1/3 flex lg:flex-row md:flex-row items-center justify-center py-3"
+    >
+      <p class="opacity-80 py-1 mx-2">
+        <% if(focus=="home") {%>
+        <a class="text-[16px] text-yellow-500" href="/">首頁</a>
+        <% }else{ %>
+        <a class="text-[12px] text-slate-100" href="/">首頁</a>
+        <% } %>
+      </p>
+      <p class="opacity-80 py-1 mx-2">
+        <% if(focus=="list") {%>
+        <a class="text-[16px] text-yellow-500" href="/blog/list">博客列表</a>
+        <% }else{ %>
+        <a class="text-[12px] text-slate-100" href="/blog/list">博客列表</a>
+        <% } %>
+      </p>
+      <p class="opacity-80 py-1 mx-2">
+        <% if(focus=="aiart") {%>
+        <a class="text-[16px] text-yellow-500" href="/aiart/type">AI畫廊</a>
+        <% }else{ %>
+        <a class="text-[12px] text-slate-100" href="/aiart/type">AI畫廊</a>
+        <% } %>
+      </p>
+      <p class="opacity-80 py-1 mx-2">
+        <% if(focus=="premium") {%>
+        <a class="text-[16px] text-yellow-500" href="/premium/product">贊助</a>
+        <% }else{ %>
+        <a class="text-[12px] text-slate-100" href="/premium/product">贊助</a>
+        <% } %>
+      </p>
+      <p class="opacity-80 py-1 mx-2">
+        <% if(focus=="vip") {%>
+        <a class="text-[16px] text-yellow-500" href="/premium/vip">我的</a>
+        <% }else{ %>
+        <a class="text-[12px] text-slate-100" href="/premium/vip">我的</a>
+        <% } %>
+      </p>
+      <% if(user.login == 'login') { %>
+      <div
+        class="flex flex-row items-center justify-center text-[12px] text-yellow-500 py-1 mx-2 px-4"
+      >
+        <p>
+          <a
+            class="text-[12px] text-yellow-500"
+            href="/user/logout"
+            title="LOGOUT"
+            >登出</a
+          >&nbsp;&#10148;&nbsp;
+        </p>
+        <img src="/images/people-01.png" width="36px" alt="" />
+      </div>
+      <% } else { %>
+      <div class="text-[12px] text-yellow-500 py-1 mx-2 px-4">
+        <a href="/user/login-page" title="注冊/登錄:Login/Register"
+          ><img src="/images/people-gay-01.png" width="36px" alt=""
+        /></a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</main>

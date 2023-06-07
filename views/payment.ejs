@@ -1,0 +1,173 @@
+<% if(clientId) { %>
+<script src="https://www.paypal.com/sdk/js?client-id=<%=clientId%>&currency=USD"></script>
+<% } %>
+<main class="container mx-auto my-[8%] px-[5%]">
+  <p class="text-red-600 text-[16px] italic">&#10148;PAYMENT : <%=warning%></p>
+  <!-- <div id="alerts" class="ms-text-center"></div>
+  <div id="loading" class="spinner-container ms-div-center">
+    <div class="spinner"></div>
+  </div> -->
+  <div
+    class="flex flex-col lg:flex-row bg-white rounded-[8px] shadow-xl mx-auto overflow-hidden"
+  >
+    <div
+      class="w-full lg:w-1/3 flex flex-col items-center justify-center px-4 py-8"
+      style="background-image: url('/images/cover.png')"
+    >
+      <h2 class="text-white text-[18px] font-bold italic">
+        Paypal 提供結算支持
+      </h2>
+      <p class="text-[12px] text-white opacity-80">
+        重要提示:請務必使用真實郵箱,支付完成後,細節資訊將一并發送到您的Email:郵箱.您也可以在用戶面板找到已完成訂單詳情資訊.
+      </p>
+    </div>
+    <div class="w-full lg:w-2/3 py-10 px-10">
+      <h2 class="font-bold">&#10148; 訂單詳情:</h2>
+      <div class="py-3">
+        <p class="py-1">訂單内容: <%=product.amount%>-<%=product.title%></p>
+        <p class="py-1">訂單編號: <%=invoice%></p>
+        <p class="py-1">
+          支付金額: USD -
+          <span class="text-red-600 font-bold">$<%=product.price%></span>
+        </p>
+        <p class="py-1">您的郵箱:</p>
+        <input
+          class="user-email w-full border rounded-[4px] border-gray-500 py-1 px-2"
+          name="email"
+          type="email"
+          placeholder="email..."
+          value="<%=user.email%>"
+          disabled
+        />
+        <span class="text-red-600 text-[12px] italic"
+          >* 請確定您可以使用Paypal,并確認以上訊息無誤,然後點擊支付!</span
+        >
+        <div id="paypal-button-container"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  // Paypal 前端支付脚本
+  $(document).ready(() => {
+    const target = document.querySelector(".user-email");
+    function check(price, amount) {
+      console.log("createOrder");
+      if (target) {
+        if (
+          target.value == "" ||
+          !target.value.includes("@") ||
+          target.value.length <= 10
+        ) {
+          return;
+        }
+        if (price < 0 || amount < 0) {
+          return;
+        }
+      }
+    }
+
+    function message() {
+      console.log("Paypal is ready!");
+    }
+
+    const price = "<%=product.price%>";
+    const amount = "<%=product.amount%>";
+    const description = "<%=product.title%>";
+    const invoice = "<%=invoice%>";
+    const clientId = "<%=clientId%>";
+    paypal
+      .Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: function () {
+          return fetch("/premium/create-paypal-order", {
+            method: "post",
+            // mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // use the "body" param to optionally pass additional order information
+            // like product skus and quantities
+            body: JSON.stringify({
+              product: {
+                description: description,
+                price: price,
+                invoice: invoice,
+              },
+            }),
+          })
+            .then((response) => response.json())
+            .then((order) => order.id);
+        },
+        // Finalize the transaction after payer approval
+        onApprove: function (data) {
+          return fetch("/premium/capture-paypal-order", {
+            method: "post",
+            // mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              orderID: data.orderID,
+            }),
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((orderData) => {
+              // Successful capture! For dev/demo purposes:
+              // console.log(
+              //   "Capture result",
+              //   orderData,
+              //   JSON.stringify(orderData, null, 2)
+              // );
+              // const transaction =
+              //   orderData.purchase_units[0].payments.captures[0];
+              // alert(
+              //   "Transaction " +
+              //     transaction.status +
+              //     ": " +
+              //     transaction.id +
+              //     "\n\nSee console for all available details"
+              // );
+              // When ready to go live, remove the alert and show a success message within this page. For example:
+              // var element = document.getElementById('paypal-button-container');
+              // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+              // Or go to another URL:  actions.redirect('thank_you.html');
+              // my function
+              if (orderData) {
+                const formData = {
+                  description: amount + description,
+                  invoice: invoice,
+                  tableName: "<%=product.target_table%>",
+                };
+                return fetch("/premium/payment-successful", {
+                  method: "post",
+                  mode: "cors",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formData),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    if (data.done) {
+                      alert(
+                        `message=${data.message} --- Payment successful,Please jump to the personal page to view detailed information! - 您的支付已经完成,请跳转到个人页面查看详情讯息!`
+                      );
+                      window.open("/premium/vip", "_self");
+                    } else {
+                      alert(
+                        `message=${data.message} --- 支付已经完成,但數據存儲出現問題,請跳轉到用戶界面查看!`
+                      );
+                      window.open("/premium/vip", "_self");
+                    }
+                  });
+              }
+            });
+        },
+      })
+      .render("#paypal-button-container");
+  });
+</script>
+<%- include('./partials/footer.ejs') %>

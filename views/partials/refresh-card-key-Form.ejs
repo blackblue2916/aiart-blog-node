@@ -1,0 +1,156 @@
+<form class="refreshCardKeyForm">
+  <div class="mt-5">
+    <label for="refreshCardTable">選擇充值卡類別</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      name="refreshCardTable"
+      id="refreshCardTable"
+      type="text"
+      value="<%=refreshCardTableName%>"
+      required
+    />
+    <p class="text-red-600 w-full text-[14px] text-center">請選擇卡類型</p>
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='coin_2000'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">2000 銀幣卡</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=coin_2000"
+        >2000 銀幣卡</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='coin_5000'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">5000 銀幣卡</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=coin_5000"
+        >5000 銀幣卡</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='silver_7'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2">7天 銀牌會員</a>
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=silver_7"
+        >7天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='silver_180'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >180天 銀牌會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=silver_180"
+        >180天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='silver_360'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >360天 銀牌會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=silver_360"
+        >360天 銀牌會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='gold_180'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >180天 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=gold_180"
+        >180天 黃金會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='gold_360'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >360天 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=gold_360"
+        >360天 黃金會員</a
+      >
+      <%}%>
+    </div>
+
+    <div class="w-full flex flex-col-reverse">
+      <%if(refreshCardTableName=='gold_forever'){%>
+      <a class="bg-purple-500 py-2 text-white text-center my-2"
+        >永久 黃金會員</a
+      >
+      <%}else{%>
+      <a
+        class="bg-slate-500 py-2 text-white text-center my-2"
+        href="/admin/bjloveyou-admin-page?focus=refresh-card-key&refreshCardTable=gold_forever"
+        >永久 黃金會員</a
+      >
+      <%}%>
+    </div>
+    <div class="mt-5">
+      <button
+        class="w-full border rounded-[4px] bg-blue-500 py-2 text-white"
+        type="submit"
+      >
+        提交數據
+      </button>
+    </div>
+  </div>
+</form>
+<script>
+  $(document).ready(() => {
+    const refreshCardKeyForm = document.querySelector(".refreshCardKeyForm");
+    refreshCardKeyForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const refreshCardTable = document.getElementById("refreshCardTable");
+      const formData = {
+        refreshCardTable: refreshCardTable.value,
+      };
+      fetch("/admin/refresh-card-key", {
+        headers: {
+          "Content-Type": "application/json",
+          //   "Content-Type": "application/x-www-form-urlencoded",  // XML 使用
+        },
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            alert(`刷新成功: ${data.message}`);
+            window.location.reload();
+          }
+        })
+        .catch((err) => alert(err));
+    });
+  });
+</script>

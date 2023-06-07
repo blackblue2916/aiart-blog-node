@@ -1,0 +1,78 @@
+<%- include('./partials/nav.ejs') %>
+<main class="container mx-auto my-[20px] px-[8%]">
+  <!-- title -->
+  <div class="w-full flex flex-col items-center justify-center mb-10">
+    <p class="text-yellow-500 text-[20px] font-light">
+      &#10026; 贊助項目列表 &#10026;
+    </p>
+    <p class="text-yellow-600 text-[16px] font-light my-1">
+      &#10026; 贊助成功后,您將獲得一組KEY,可以在<a
+        class="text-orange-500"
+        href="/premium/vip"
+        >&nbsp;&nbsp;我的&nbsp;&nbsp;</a
+      >頁面提升會員等級! &#10026;
+    </p>
+  </div>
+  <div class="w-full flex flex-col items-center justify-center mb-10">
+    <div
+      class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 w-4/5"
+    >
+      <% if(data) { %> <% for(var item of data) { %>
+      <div
+        class="bg-black/[.8] border-2 border-yellow-500 rounded-[22px] shadow-xl p-4 mb-4"
+      >
+        <p class="text-[12px] text-white opacity-90 text-center">
+          <span class="text-orange-400 text-[14px]"
+            ><%=item.amount%><%=item.title%></span
+          >
+        </p>
+        <p class="text-[12px] text-orange-600 text-center">
+          +<%=item.award%>銀幣
+        </p>
+        <img src="/images/<%=item.imgname%>.png" alt="" />
+        <p class="text-[20px] text-white font-bold text-center">
+          $<%=item.price%>
+        </p>
+        <% if(user.login == "login") { %>
+        <a href="/premium/paypal-payment-page?id=<%=item.id%>">
+          <button
+            class="w-full rounded-[8px] bg-purple-500 text-[16px] italic font-bold text-white px-3 py-1 mt-1 mb-1"
+          >
+            提交訂單
+          </button>
+        </a>
+        <% } else { %>
+        <a class="click-btn" data-doc="<%=item.id%>">
+          <button
+            class="w-full rounded-[8px] bg-purple-500 text-[16px] italic font-bold text-white px-3 py-1 mt-1 mb-1"
+          >
+            提交訂單
+          </button>
+        </a>
+        <% } %>
+      </div>
+      <% } %> <% } %>
+    </div>
+  </div>
+</main>
+<script>
+  $(document).ready(() => {
+    let isLogin = "<%=user.login%>";
+    // console.log(isLogin);
+    const click_btns = document.querySelectorAll(".click-btn");
+
+    if (click_btns.length > 0) {
+      click_btns.forEach((element) => {
+        element.addEventListener("click", function (e) {
+          if (isLogin == "null") {
+            return alert("用戶未登錄,無法使用該功能!");
+          } else {
+            return (window.location.href =
+              "/premium/paypal-payment-page?id=" + element.dataset.doc);
+          }
+        });
+      });
+    }
+  });
+</script>
+<%- include('./partials/footer.ejs') %>

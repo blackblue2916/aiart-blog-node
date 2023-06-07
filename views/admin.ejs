@@ -1,0 +1,145 @@
+<main class="container mx-auto my-[2%] px-[8%]">
+  <div
+    class="flex flex-col lg:flex-row bg-white rounded-[8px] shadow-xl mx-auto overflow-hidden"
+  >
+    <div
+      class="w-full lg:w-1/4 flex flex-col items-center justify-center py-10 px-5"
+    >
+      <div class="w-full">
+        <% if(focus == "add-blog-post") {%>
+        <p class="w-full bg-blue-500 py-2 my-2 text-center text-white">
+          添加博客文章
+        </p>
+        <% }else{ %>
+        <p
+          class="w-full py-2 my-2 text-center bg-gray-100"
+          id="switchBtn"
+          data-type="add-blog-post"
+        >
+          <a
+            class="cursor-pointer"
+            href="/admin/bjloveyou-admin-page?focus=add-blog-post"
+            >添加博客文章</a
+          >
+        </p>
+        <% } %>
+      </div>
+
+      <div class="w-full">
+        <% if(focus == "add-image") {%>
+        <p class="w-full bg-blue-500 py-2 my-2 text-center text-white">
+          添加AI圖片
+        </p>
+        <% }else{ %>
+        <p
+          class="w-full py-2 my-2 text-center bg-gray-100"
+          id="switchBtn"
+          data-type="add-image"
+        >
+          <a
+            class="cursor-pointer"
+            href="/admin/bjloveyou-admin-page?focus=add-image"
+            >添加AI圖片</a
+          >
+        </p>
+        <% } %>
+      </div>
+
+      <div class="w-full">
+        <% if(focus == "add-art-type") {%>
+        <p class="w-full bg-blue-500 py-2 my-2 text-center text-white">
+          添加圖片類型
+        </p>
+        <% }else{ %>
+        <p
+          class="w-full py-2 my-2 text-center bg-gray-100"
+          id="switchBtn"
+          data-type="add-art-type"
+        >
+          <a
+            class="cursor-pointer"
+            href="/admin/bjloveyou-admin-page?focus=add-art-type"
+            >添加圖片類型</a
+          >
+        </p>
+        <% } %>
+      </div>
+
+      <div class="w-full">
+        <% if(focus == "add-card-key") {%>
+        <p class="w-full bg-blue-500 py-2 my-2 text-center text-white">
+          批量添加卡密
+        </p>
+        <% }else{ %>
+        <p
+          class="w-full py-2 my-2 text-center bg-gray-100"
+          id="switchBtn"
+          data-type="add-card-key"
+        >
+          <a
+            class="cursor-pointer"
+            href="/admin/bjloveyou-admin-page?focus=add-card-key"
+            >批量添加卡密</a
+          >
+        </p>
+        <% } %>
+      </div>
+
+      <div class="w-full">
+        <% if(focus == "refresh-card-key") {%>
+        <p class="w-full bg-blue-500 py-2 my-2 text-center text-white">
+          批量刷新卡密
+        </p>
+        <% }else{ %>
+        <p
+          class="w-full py-2 my-2 text-center bg-gray-100"
+          id="switchBtn"
+          data-type="refresh-art-type"
+        >
+          <a
+            class="cursor-pointer"
+            href="/admin/bjloveyou-admin-page?focus=refresh-card-key"
+            >批量刷新卡密</a
+          >
+        </p>
+        <% } %>
+      </div>
+
+      <div class="w-full">
+        <% if(admin) {%>
+        <p class="w-full bg-orange-500 py-2 my-2 text-center text-white">
+          <a href="/admin/logout">LOGOUT</a>
+        </p>
+        <% } %> %>
+      </div>
+    </div>
+    <div class="w-full lg:w-3/4 py-10 px-10">
+      <h2 class="font-bold">&#10148; <%=focus%></h2>
+      <!-- aiart form -->
+      <div>
+        <% if(focus == "add-blog-post") {%>
+        <%-include('./partials/blog-add-post-Form.ejs')%> <%}%>
+      </div>
+      <div>
+        <% if(focus == "add-image") {%>
+        <%-include('./partials/aiart-add-image-Form.ejs')%> <%}%>
+      </div>
+      <div>
+        <% if(focus == "add-art-type") {%>
+        <%-include('./partials/aiart-add-type-Form.ejs')%> <%}%>
+      </div>
+      <div>
+        <% if(focus == "add-card-key") {%>
+        <%-include('./partials/add-card-key-Form.ejs')%> <%}%>
+      </div>
+      <div>
+        <% if(focus == "update-card-key") {%>
+        <%-include('./partials/update-card-key-Form.ejs')%> <%}%>
+      </div>
+      <div>
+        <% if(focus == "refresh-card-key") {%>
+        <%-include('./partials/refresh-card-key-Form.ejs')%> <%}%>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,60 @@
+<main class="container mx-auto my-[11%] px-[5%]">
+  <div
+    class="flex flex-col lg:flex-row bg-white rounded-[8px] shadow-xl mx-auto overflow-hidden"
+  >
+    <div
+      class="w-full lg:w-1/3 flex flex-col items-center justify-center py-8 px-5"
+      style="background-image: url('/images/cover.png')"
+    >
+      <h2 class="text-white text-[22px] font-bold">充值驗證頁面</h2>
+      <span class="text-white text-[12px] opacity-70"
+        >這是一個獨立的,加密頁面,您必須驗證賬號有效性!</span
+      >
+    </div>
+    <div class="w-full lg:w-2/3 py-10 px-10">
+      <form action="/premium/check-user-key" method="POST">
+        <h2 class="font-bold mt-5">&#10148; Connect Key:</h2>
+        <div class="mt-1">
+          <input
+            class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+            value="<%=conn_key%>"
+            name="conn_key"
+            id="conn_key"
+            type="text"
+            required
+          />
+          <span class="text-xs text-red-700"
+            >*&nbsp;不要在任何公共網絡展示這個私人頁面,不要將 connect key 與你的
+            email 同時展示在公共網路!</span
+          ><br />
+          <span class="text-xs text-red-700"
+            >*&nbsp;connect key 是一個私人,且動態變更的公鑰,您無需記憶!</span
+          >
+        </div>
+
+        <h2 class="font-bold mt-5">&#10148; You'r Email:</h2>
+        <div class="mt-1">
+          <input
+            class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+            name="email"
+            id="email"
+            type="email"
+            placeholder="* Email..."
+            required
+          />
+          <span class="text-xs text-red-700">*&nbsp;請填寫您的郵箱賬號</span>
+        </div>
+
+        <div class="mt-5">
+          <button
+            class="w-full border rounded-[4px] bg-purple-500 py-2 text-white"
+            type="submit"
+          >
+            提交驗證
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+<%- include('./partials/footer.ejs') %>

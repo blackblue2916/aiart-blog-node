@@ -1,0 +1,79 @@
+<main class="container mx-auto my-[11%] px-[8%]">
+  <p class="text-white my-2">
+    &nbsp;&nbsp;&nbsp;&#10148;&nbsp;<a href="/">Home</a>
+  </p>
+  <div
+    class="flex flex-col lg:flex-row bg-white rounded-[8px] shadow-xl mx-auto overflow-hidden"
+  >
+    <div
+      class="w-full lg:w-1/2 flex flex-col items-center justify-center py-10 px-5"
+      style="
+        background-image: url('/images/registerGirl.png');
+        background-size: cover;
+      "
+    >
+      <h2 class="text-white text-[22px] font-bold">登錄頁面</h2>
+    </div>
+    <div class="w-full lg:w-1/2 py-10 px-10">
+      <h2 class="font-bold">&#10148; Register</h2>
+      <form action="/user/register" method="post">
+        <div class="mt-5">
+          <input
+            class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+            name="email"
+            type="email"
+            placeholder="* Email..."
+            required
+          />
+        </div>
+
+        <div class="mt-5">
+          <input
+            class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+            name="password"
+            type="password"
+            placeholder="* Password..."
+            required
+          />
+        </div>
+
+        <div class="mt-5">
+          <input
+            class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+            name="confirmPassword"
+            type="confirmPassword"
+            placeholder="* Confirm Password..."
+            required
+          />
+        </div>
+        <% if(state == "err") {%>
+        <p class="text-center text-[12px] text-red-600 my-2"><%=err%></p>
+        <p
+          class="w-full border rounded-[4px] bg-purple-500 py-2 text-white text-center"
+        >
+          <a href="/user/register-page">再次嘗試 - RETRY</a>
+        </p>
+        <% }else{ %>
+        <div class="mt-5">
+          <button
+            class="w-full border rounded-[4px] bg-purple-500 py-2 text-white"
+            type="submit"
+          >
+            注冊 - REGISTER
+          </button>
+          <p class="text-black text-center my-2">
+            Or<span class="text-purple-600"
+              >&nbsp;&#10148;&nbsp;<a href="/user/login-page">Login</a></span
+            >
+          </p>
+        </div>
+        <% } %>
+      </form>
+    </div>
+  </div>
+  <p class="text-[15px] text-yellow-500 text-center my-3">
+    2022年7月起,每個新注冊用戶贈送300銀幣 - From July 2022, each new registered
+    user will be given 50 silver coins
+  </p>
+</main>
+<%- include('./partials/footer.ejs') %>

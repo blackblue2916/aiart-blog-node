@@ -1,0 +1,62 @@
+<%- include('./partials/nav.ejs') %>
+<main class="container mx-auto my-[20px] px-[8%]">
+  <div class="w-full flex flex-col items-center justify-center mt-6 mb-6">
+    <img
+      class="rounded-[25%]"
+      src="/images/game_logo_02_512.png"
+      width="120px"
+      alt=""
+    />
+    <p class="text-yellow-500 text-[20px] font-light my-1">
+      &#10026; 像素猴子AI - 原創寫真套圖 &#10026;
+    </p>
+    <p class="text-[15px] text-gray-400">
+      本博客致力於關注AI繪畫技術,分享原創AI繪畫作品,如果您轉載本博客内容請注明出處,尊重他人勞動,謝謝!
+    </p>
+  </div>
+  <div class="w-full my-5">
+    <a href="/aiart/art-r18" target="_blank">
+      <p
+        class="bg-purple-500 py-2 px-2 text-white text-[22px] text-center font-bold"
+      >
+        會員專享區
+      </p>
+      <img
+        src="/images/art-r18ad.png"
+        alt=""
+        title="18+高級會員區,更多更全面的素材 | R18 Premium member area, more and more comprehensive material"
+      />
+    </a>
+  </div>
+  <div
+    class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
+  >
+    <%if(data){%> <% for(var item of data) { %>
+    <div class="w-full my-3 rounded-md shadow-2xl shadow-black">
+      <p class="bg-slate-700 text-orange-300 text-[14px] text-center py-2">
+        <%=item.title %>
+      </p>
+      <a href="/aiart/class_key?class_key=<%=item.class_key%>" target="_blank"
+        ><img
+          class="image-type-click cursor-pointer"
+          data-id="<%=item.id%>"
+          data-key="<%=item.class_key%>"
+          src="/images/aiart_class_pre/<%=item.pre_img%>"
+          alt=""
+        />
+      </a>
+    </div>
+    <% } %> <% } %>
+  </div>
+</main>
+<script>
+  // $(document).ready(() => {
+  //   addGlobalEventListener("click", ".image-type-click", async (e) => {
+  //     let id = e.target.dataset.id;
+  //     let class_key = e.target.dataset.key;
+  //     // console.log(id);
+  //     window.open(`/aiart/class_key?class_key=${class_key}`, "_blank");
+  //   });
+  // });
+</script>
+<%- include('./partials/footer.ejs') %>

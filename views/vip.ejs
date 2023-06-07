@@ -1,0 +1,171 @@
+<%- include('./partials/nav.ejs') %>
+<main class="container mx-auto my-[20px] px-[8%]">
+  <div class="w-full flex flex-col items-center justify-center mb-10">
+    <p class="text-yellow-500 text-[20px] font-light">
+      &#10026; 會員提升頁面 &#10026;
+    </p>
+    <p class="text-white text-[16px] font-light">
+      &#10026; 本站與多個聯盟網站合作:<a class="text-orange-500" href="#btm"
+        >&nbsp;&nbsp;查看聯盟網站列表&nbsp;&nbsp;</a
+      >會員等級,VIP權限,賬號以及銀幣全部通用,購買一次享受聯盟一切資源. &#10026;
+    </p>
+  </div>
+  <%if(user.login == 'login') {%>
+  <div class="w-full flex flex-col items-center justify-center mb-10">
+    <div class="w-1/2 mt-5">
+      <form class="add-card-key-form">
+        <label class="font-normal text-orange-400" for="card_key"
+          >&#10148;輸入您的卡號 - Enter your card key</label
+        >
+        <input
+          class="w-full border rounded-[4px] border-gray-500 py-2 px-2"
+          name="card_key"
+          id="card_key"
+          type="text"
+          placeholder="* card key - 卡密"
+          required
+        />
+        <p class="text-yellow-500 text-[12px] font-light text-center my-1">
+          在上方輸入并提交卡號密碼,系統將自動判斷類型,成功后見顯示您的最新數據.
+        </p>
+        <input
+          class="w-full border rounded-[4px] text-yellow-500 border-gray-500 py-2 px-2 mb-1"
+          name="email"
+          type="email"
+          value="<%=user.email%>"
+          disabled
+        />
+        <input
+          class="w-full border rounded-[4px] text-yellow-500 border-gray-500 py-2 px-2"
+          name="userid"
+          type="number"
+          value="<%=user.id%>"
+          disabled
+        />
+        <div class="mt-5">
+          <button
+            class="w-full rounded-[8px] bg-purple-500 py-2 text-white hover:bg-purple-700"
+            id="submitBtn"
+            type="submit"
+          >
+            提交卡號訊息
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="w-4/5 mt-10 flex flex-col items-center justify-center">
+      <p class="w-full text-orange-400 text-center font-medium py-1">
+        - 用戶基本訊息 -
+      </p>
+      <table class="w-full text-center">
+        <thead>
+          <tr class="border">
+            <td class="text-orange-400 border py-2">Premium</td>
+            <td class="text-white border py-2 px-2"><%=user.premium%></td>
+          </tr>
+          <tr class="border">
+            <td class="text-orange-400 border py-2">Email</td>
+            <td class="text-white border py-2 px-2"><%=user.email%></td>
+          </tr>
+          <tr class="border">
+            <td class="text-orange-400 border py-2">Vip Level</td>
+            <td class="text-white border py-2 px-2">level : <%=user.level%></td>
+          </tr>
+          <tr class="border">
+            <td class="text-orange-400 border py-2">Silver Coin</td>
+            <td class="text-white border py-2 px-2">
+              Coin : <%=user.silver_coin%>
+            </td>
+          </tr>
+          <tr class="border">
+            <td class="text-orange-400 border py-2">Conn Key</td>
+            <td class="text-red-500 border py-2 px-2"><%=user.conn_key%></td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="w-4/5 mt-10 flex flex-col items-center justify-center">
+      <p class="w-full text-orange-400 text-center font-medium py-1">
+        - 購物車明細 -
+      </p>
+      <table class="w-full text-center">
+        <thead>
+          <td class="text-orange-400 border py-2">Product</td>
+          <td class="text-orange-400 border py-2">Card Key</td>
+          <td class="text-orange-400 border py-2">Invoice</td>
+        </thead>
+        <tbody>
+          <%if(orders){%> <% for(var item of orders) { %>
+          <tr>
+            <td class="text-white font-light text-[14px] border py-1">
+              <%=item.product_description%>
+            </td>
+            <td class="text-yellow-400 font-light text-[14px] border py-1">
+              <%=item.card_key%>
+            </td>
+            <td class="text-white font-light text-[14px] border py-1">
+              <%=item.invoice%>
+            </td>
+          </tr>
+          <% } %> <% } %>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-slate-400 text-[14px] font-light text-center my-3">
+      個人訊息切勿對外展示,如果您在公共場所或者公共WIFI進行上網,請在離開時清除個人訊息.
+    </p>
+  </div>
+  <% }else{ %>
+  <div class="w-full flex flex-col items-center justify-center my-[200px]">
+    <h1 class="font-bold text-orange-400 text-[20px] text-center">
+      <%=message%>
+    </h1>
+    <p class="font-normal text-orange-400 text-[14px] text-center">
+      <%=messageEn%>
+    </p>
+  </div>
+  <% } %>
+</main>
+<script>
+  $(document).ready(() => {
+    const addCardKeyForm = document.querySelector(".add-card-key-form");
+    const submitBtn = document.getElementById("submitBtn");
+    // submitBtn.removeAttribute("disabled");
+    // submitBtn.classList.add("hidden");
+    addCardKeyForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const card_key = document.getElementById("card_key");
+      const formData = {
+        card_key: card_key.value,
+      };
+      submitBtn.classList.add("hidden");
+      // submitBtn.classList.add("new-value");
+      // submitBtn.classList.toggle("new-class", true);
+      // submitBtn.classList.remove("new-value");
+      // submitBtn.style = "display:none;";
+      // submitBtn.getAttribute("id");
+      // submitBtn.setAttribute("id","value");
+      // submitBtn.removeAttribute("disabled");
+      // submitBtn.remove();
+
+      fetch("/premium/add-card-key", {
+        headers: {
+          "Content-Type": "application/json",
+          //   "Content-Type": "application/x-www-form-urlencoded",  // XML 使用
+        },
+        method: "post",
+        mode: "cors",
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            alert(`${data.messageCN} - ${data.messageEN}`);
+            submitBtn.classList.remove("hidden");
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
+<%- include('./partials/footer.ejs') %>

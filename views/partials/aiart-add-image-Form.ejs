@@ -1,0 +1,91 @@
+<form class="aiartForm">
+  <div class="mt-5">
+    <label for="image-url">class key</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      name="class_key"
+      id="class_key"
+      type="text"
+      placeholder="* class key..."
+      required
+    />
+  </div>
+
+  <div class="mt-5">
+    <label for="watch-level">watch level</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      name="watch-level"
+      id="watch_level"
+      type="number"
+      placeholder="* watch level..."
+      required
+    />
+  </div>
+
+  <div class="mt-5">
+    <label for="image-url">preview image</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      id="files"
+      type="file"
+      name="files"
+      accept="image/*"
+      multiple
+      required
+    />
+  </div>
+
+  <div class="mt-5">
+    <label for="image-url">orig image</label>
+    <input
+      class="w-full border rounded-[4px] border-gray-500 py-1 px-2"
+      name="org_img"
+      id="org_img"
+      type="text"
+      placeholder="* org url..."
+      required
+    />
+  </div>
+
+  <div class="mt-5">
+    <button
+      class="w-full border rounded-[4px] bg-purple-500 py-2 text-white"
+      type="submit"
+    >
+      提交更新
+    </button>
+  </div>
+</form>
+<script>
+  $(document).ready(() => {
+    const aiartForm = document.querySelector(".aiartForm");
+    aiartForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const class_key = document.getElementById("class_key");
+      const watch_level = document.getElementById("watch_level");
+      const org_img = document.getElementById("org_img");
+
+      const files = document.getElementById("files");
+      const formData = new FormData();
+      formData.append("class_key", class_key.value);
+      formData.append("watch_level", watch_level.value);
+      formData.append("org_img", org_img.value);
+      for (let i = 0; i < files.files.length; i++) {
+        formData.append("files", files.files[i]);
+      }
+      //   console.log(...formData);
+      fetch("/admin/add-ai-image", {
+        method: "post",
+        mode: "cors",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            window.location.reload();
+          }
+        });
+    });
+  });
+</script>
