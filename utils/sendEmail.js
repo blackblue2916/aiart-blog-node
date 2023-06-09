@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const mailGen = require("mailgen");
-const { EMAIL, APP_PASSWORD } = require("../env");
+const EMAIL = process.env.EMAIL;
+const APP_PASSWORD = process.env.APP_PASSWORD;
 
 // 測試 - 已經OK
 async function testMail() {

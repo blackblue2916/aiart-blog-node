@@ -3,7 +3,8 @@ const mailGen = require("mailgen");
 const fs = require("fs");
 const https = require("https");
 const path = require("path");
-const { EMAIL, APP_PASSWORD } = require("../env");
+const EMAIL = process.env.EMAIL;
+const APP_PASSWORD = process.env.APP_PASSWORD;
 
 // 產品類型已經產品明細
 function cardTypeAndData(card_key) {
